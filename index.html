@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>陈正伟 | 个人主页</title>
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f7f7f8;
+      --bg-card: #ffffff;
+      --bg-nav: rgba(255, 255, 255, 0.8);
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --text-tertiary: #999999;
+      --border-color: #e8e8e8;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --accent-color: #1a1a1a;
+      --accent-bg: #1a1a1a;
+      --accent-text: #ffffff;
+      --tag-bg: #f0f0f0;
+      --tag-text: #555555;
+      --green-dot: #22c55e;
+      --green-tag-bg: #dcfce7;
+      --green-tag-text: #16a34a;
+      --hero-glow-opacity: 0.4;
+      --nav-border: rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-card: #1a1a1a;
+      --bg-nav: rgba(10, 10, 10, 0.8);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0a0a0;
+      --text-tertiary: #666666;
+      --border-color: #2a2a2a;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+      --accent-color: #f0f0f0;
+      --accent-bg: #f0f0f0;
+      --accent-text: #0a0a0a;
+      --tag-bg: #2a2a2a;
+      --tag-text: #c0c0c0;
+      --green-dot: #4ade80;
+      --green-tag-bg: rgba(34, 197, 94, 0.15);
+      --green-tag-text: #4ade80;
+      --hero-glow-opacity: 0.6;
+      --nav-border: rgba(255, 255, 255, 0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 24px; transition: all 0.3s ease; border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background-color: var(--bg-nav); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--nav-border);
+    }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; display: flex;
+      align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 14px; color: var(--text-secondary);
+      transition: color 0.2s ease; font-weight: 500;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .nav-btn {
+      width: 36px; height: 36px; border: 1px solid var(--border-color);
+      border-radius: 10px; background: transparent; color: var(--text-primary);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s ease; font-size: 13px; font-weight: 600;
+    }
+    .nav-btn:hover { background-color: var(--bg-secondary); border-color: var(--text-tertiary); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .hamburger span { width: 20px; height: 2px; background-color: var(--text-primary); border-radius: 2px; transition: all 0.3s ease; }
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0;
+      background-color: var(--bg-primary); border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px; z-index: 999;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block; padding: 12px 0; font-size: 15px;
+      color: var(--text-secondary); border-bottom: 1px solid var(--border-color);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 80px; position: relative; overflow: hidden;
+    }
+    .hero-glow { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 0; }
+    .hero-glow::before {
+      content: ''; position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+      border-radius: 50%; filter: blur(60px); opacity: var(--hero-glow-opacity);
+    }
+    .hero-glow::after {
+      content: ''; position: absolute; top: 30%; left: 30%; width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+      border-radius: 50%; filter: blur(50px); opacity: var(--hero-glow-opacity);
+    }
+    .hero-glow .glow-orb {
+      position: absolute; top: 25%; right: 25%; width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+      border-radius: 50%; filter: blur(50px); opacity: var(--hero-glow-opacity);
+    }
+    [data-theme="light"] .hero-glow::before { background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%); }
+    [data-theme="light"] .hero-glow::after { background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%); }
+    [data-theme="light"] .hero-glow .glow-orb { background: radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, transparent 70%); }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px;
+      background-color: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: 100px; font-size: 13px; color: var(--text-secondary); margin-bottom: 32px;
+    }
+    .hero-badge .dot { width: 8px; height: 8px; background-color: var(--green-dot); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .hero-title {
+      font-size: clamp(48px, 8vw, 80px); font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-primary) 50%, #8b5cf6 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="light"] .hero-title {
+      background: linear-gradient(135deg, #1a1a1a 0%, #1a1a1a 60%, #6d28d9 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-subtitle { font-size: clamp(16px, 2.5vw, 20px); color: var(--text-secondary); font-weight: 600; margin-bottom: 20px; }
+    .hero-description { font-size: 15px; color: var(--text-tertiary); max-width: 520px; margin: 0 auto 40px; line-height: 1.7; }
+    .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px;
+      border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: all 0.2s ease; border: none;
+    }
+    .btn-primary { background-color: var(--accent-bg); color: var(--accent-text); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .btn-secondary { background-color: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background-color: var(--bg-secondary); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--text-tertiary); font-size: 12px; animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+    section { padding: 100px 24px; }
+    .section-container { max-width: 1000px; margin: 0 auto; }
+    .section-title { font-size: clamp(24px, 4vw, 32px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
+
+    .stats { padding-top: 0; padding-bottom: 60px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-card {
+      background-color: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 24px; transition: all 0.3s ease; position: relative;
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .stat-card .active-tag {
+      position: absolute; top: 16px; right: 16px; padding: 3px 10px;
+      background-color: var(--green-tag-bg); color: var(--green-tag-text);
+      border-radius: 100px; font-size: 11px; font-weight: 600;
+    }
+    .stat-icon {
+      width: 40px; height: 40px; border-radius: 10px; background-color: var(--bg-secondary);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--text-secondary);
+    }
+    .stat-number { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .stat-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+    .stat-sub { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
+
+    .about-text { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px; }
+    .about-text:last-child { margin-bottom: 0; }
+
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px;
+      width: 2px; background-color: var(--border-color);
+    }
+    .timeline-item { position: relative; margin-bottom: 32px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -32px; top: 24px; width: 18px; height: 18px;
+      border-radius: 50%; background-color: var(--bg-primary); border: 3px solid var(--border-color); z-index: 1;
+    }
+    .timeline-item:first-child .timeline-dot { border-color: var(--green-dot); background-color: var(--green-dot); }
+    .experience-card {
+      background-color: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 28px; transition: all 0.3s ease;
+    }
+    .experience-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .experience-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+    .experience-role { font-size: 17px; font-weight: 700; }
+    .experience-date { font-size: 13px; color: var(--text-tertiary); font-weight: 500; }
+    .experience-company { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; font-weight: 500; }
+    .experience-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tag { padding: 4px 12px; background-color: var(--tag-bg); color: var(--tag-text); border-radius: 100px; font-size: 12px; font-weight: 500; }
+    .experience-list { list-style: none; }
+    .experience-list li {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.7;
+      padding-left: 20px; position: relative; margin-bottom: 8px;
+    }
+    .experience-list li:last-child { margin-bottom: 0; }
+    .experience-list li::before {
+      content: ''; position: absolute; left: 0; top: 10px;
+      width: 6px; height: 6px; background-color: var(--text-tertiary); border-radius: 50%;
+    }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    .project-card {
+      background-color: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 16px; overflow: hidden; transition: all 0.3s ease;
+    }
+    .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .project-thumbnail { height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; }
+    .project-thumbnail::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.2) 100%); }
+    .project-content { padding: 24px; }
+    .project-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+    .project-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
+    .project-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .education-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; }
+    .education-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .education-school { font-size: 20px; font-weight: 700; }
+    .education-date { font-size: 14px; color: var(--text-tertiary); }
+    .education-major { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; }
+    .education-details { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px; }
+    .education-detail-label { font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .education-detail-value { font-size: 15px; font-weight: 600; }
+    .education-courses { border-top: 1px solid var(--border-color); padding-top: 20px; }
+    .education-courses-label { font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .course-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .skills-cloud { display: flex; flex-wrap: wrap; gap: 12px; }
+    .skill-tag {
+      padding: 10px 20px; background-color: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 100px; font-size: 14px; font-weight: 500; color: var(--text-secondary); transition: all 0.2s ease;
+    }
+    .skill-tag:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); color: var(--text-primary); border-color: var(--text-tertiary); }
+
+    .contact { text-align: center; }
+    .contact-subtitle { font-size: 16px; color: var(--text-secondary); margin-bottom: 40px; }
+    .contact-info { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; }
+    .contact-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-secondary); }
+    .contact-item svg { color: var(--text-tertiary); }
+    .contact-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    .footer { border-top: 1px solid var(--border-color); padding: 32px 24px; }
+    .footer-container { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-text { font-size: 13px; color: var(--text-tertiary); }
+    .footer-built { font-size: 13px; color: var(--text-tertiary); }
+    .footer-built .heart { color: #ef4444; display: inline-block; animation: heartbeat 1.5s ease-in-out infinite; }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in:nth-child(2) { transition-delay: 0.1s; }
+    .fade-in:nth-child(3) { transition-delay: 0.2s; }
+    .fade-in:nth-child(4) { transition-delay: 0.3s; }
+
+    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .education-details { grid-template-columns: 1fr; }
+      section { padding: 60px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .hero-buttons .btn { width: 100%; max-width: 280px; justify-content: center; }
+      .contact-buttons { flex-direction: column; align-items: center; }
+      .contact-buttons .btn { width: 100%; max-width: 280px; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .experience-header { flex-direction: column; }
+      .contact-info { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" data-zh="陈正伟" data-en="Zhengwei Chen">陈正伟</a>
+      <ul class="nav-links">
+        <li><a href="#about" data-zh="关于" data-en="About">关于</a></li>
+        <li><a href="#experience" data-zh="实习经历" data-en="Experience">实习经历</a></li>
+        <li><a href="#projects" data-zh="项目" data-en="Projects">项目</a></li>
+        <li><a href="#education" data-zh="教育" data-en="Education">教育</a></li>
+        <li><a href="#contact" data-zh="联系" data-en="Contact">联系</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-btn" id="langToggle" aria-label="Toggle language">EN</button>
+        <button class="nav-btn" id="themeToggle" aria-label="Toggle theme">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" data-zh="关于" data-en="About">关于</a>
+    <a href="#experience" data-zh="实习经历" data-en="Experience">实习经历</a>
+    <a href="#projects" data-zh="项目" data-en="Projects">项目</a>
+    <a href="#education" data-zh="教育" data-en="Education">教育</a>
+    <a href="#contact" data-zh="联系" data-en="Contact">联系</a>
+  </div>
+
+  <section class="hero" id="hero">
+    <div class="hero-glow"><div class="glow-orb"></div></div>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span><span data-zh="欢迎来到我的个人主页" data-en="Welcome to my personal site">欢迎来到我的个人主页</span></div>
+      <h1 class="hero-title" data-zh="陈正伟" data-en="Zhengwei Chen">陈正伟</h1>
+      <p class="hero-subtitle" data-zh="电商运营 · 数据分析 · 商业研究" data-en="E-commerce Operations · Data Analysis · Business Research">电商运营 · 数据分析 · 商业研究</p>
+      <p class="hero-description" data-zh="南京大学经济学在读，关注电商运营、数据分析与商业洞察，用数据驱动业务增长。" data-en="Economics student at Nanjing University, focused on e-commerce operations, data analysis, and business insights. Driving growth through data.">南京大学经济学在读，关注电商运营、数据分析与商业洞察，用数据驱动业务增长。</p>
+      <div class="hero-buttons">
+        <a href="#experience" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          <span data-zh="查看简历" data-en="View Resume">查看简历</span>
+        </a>
+        <a href="#contact" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span data-zh="联系我" data-en="Contact Me">联系我</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span data-zh="下滑" data-en="Scroll">下滑</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="section-container">
+      <div class="stats-grid">
+        <div class="stat-card fade-in">
+          <span class="active-tag" data-zh="在读" data-en="Active">在读</span>
+          <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>
+          <div class="stat-number" data-zh="3段" data-en="3">3段</div>
+          <div class="stat-label" data-zh="实习经历" data-en="Internships">实习经历</div>
+          <div class="stat-sub" data-zh="字节跳动 · 同程旅行 · 国联证券" data-en="ByteDance · Tongcheng · Guolian">字节跳动 · 同程旅行 · 国联证券</div>
+        </div>
+        <div class="stat-card fade-in">
+          <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+          <div class="stat-number">4.48/5.0</div>
+          <div class="stat-label">GPA</div>
+          <div class="stat-sub" data-zh="专业前10%" data-en="Top 10%">专业前10%</div>
+        </div>
+        <div class="stat-card fade-in">
+          <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+          <div class="stat-number" data-zh="2个" data-en="2">2个</div>
+          <div class="stat-label" data-zh="研究项目" data-en="Research Projects">研究项目</div>
+          <div class="stat-sub" data-zh="大创队长 · 学术研究" data-en="Project Lead · Research">大创队长 · 学术研究</div>
+        </div>
+        <div class="stat-card fade-in">
+          <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg></div>
+          <div class="stat-number" data-zh="1项" data-en="1">1项</div>
+          <div class="stat-label" data-zh="奖学金" data-en="Scholarship">奖学金</div>
+          <div class="stat-sub">2024人民奖学金</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-container">
+      <h2 class="section-title fade-in" data-zh="关于我" data-en="About Me">关于我</h2>
+      <p class="about-text fade-in" data-zh="我是南京大学经济学专业在读学生，对数据驱动的商业决策充满热情。" data-en="I am an Economics student at Nanjing University, passionate about data-driven business decisions.">我是南京大学经济学专业在读学生，对数据驱动的商业决策充满热情。</p>
+      <p class="about-text fade-in" data-zh="具备扎实的数据分析能力和商业敏感度，擅长从数据中发现业务增长机会，能够独立完成从数据采集、清洗到分析洞察的全流程工作。" data-en="With solid data analysis skills and business acumen, I excel at identifying growth opportunities from data and can independently complete the full workflow from data collection and cleaning to analysis and insights.">具备扎实的数据分析能力和商业敏感度，擅长从数据中发现业务增长机会，能够独立完成从数据采集、清洗到分析洞察的全流程工作。</p>
+      <p class="about-text fade-in" data-zh="有三段不同领域的实习经历，覆盖电商运营、商业分析、行业研究方向，积累了丰富的跨行业实践经验。" data-en="I have three internship experiences across different fields, covering e-commerce operations, business analysis, and industry research, accumulating rich cross-industry practical experience.">有三段不同领域的实习经历，覆盖电商运营、商业分析、行业研究方向，积累了丰富的跨行业实践经验。</p>
+      <p class="about-text fade-in" data-zh="期待在互联网/电商行业持续深耕，用数据驱动业务决策，创造真实的商业价值。" data-en="I look forward to continuing to deepen my expertise in the internet/e-commerce industry, using data to drive business decisions and create real commercial value.">期待在互联网/电商行业持续深耕，用数据驱动业务决策，创造真实的商业价值。</p>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-container">
+      <h2 class="section-title fade-in" data-zh="实习经历" data-en="Experience">实习经历</h2>
+      <div class="timeline">
+        <div class="timeline-item fade-in">
+          <div class="timeline-dot"></div>
+          <div class="experience-card">
+            <div class="experience-header">
+              <div class="experience-role" data-zh="行业运营实习生（大家电组）" data-en="Industry Operations Intern (Major Appliances)">行业运营实习生（大家电组）</div>
+              <div class="experience-date" data-zh="2026.05 - 至今" data-en="May 2026 - Present">2026.05 - 至今</div>
+            </div>
+            <div class="experience-company" data-zh="字节跳动 · 上海" data-en="ByteDance · Shanghai">字节跳动 · 上海</div>
+            <div class="experience-tags">
+              <span class="tag" data-zh="运营" data-en="Operations">运营</span>
+              <span class="tag" data-zh="电商" data-en="E-commerce">电商</span>
+              <span class="tag" data-zh="数据" data-en="Data">数据</span>
+            </div>
+            <ul class="experience-list">
+              <li data-zh="618大促期间搭建海尔支付/发货双口径GMV监测看板，推动ATD达成率超90%" data-en="Built Haier dual-caliber GMV monitoring dashboard (payment/shipping) during 618 promotion, driving ATD achievement rate over 90%">618大促期间搭建海尔支付/发货双口径GMV监测看板，推动ATD达成率超90%</li>
+              <li data-zh="负责大家电价格力运营，搭建高价商品巡检-推送-改价闭环机制，高价率从10%降至5%以内" data-en="Led major appliance pricing operations, built inspection-push-repricing closed-loop mechanism, reducing high-price rate from 10% to under 5%">负责大家电价格力运营，搭建高价商品巡检-推送-改价闭环机制，高价率从10%降至5%以内</li>
+              <li data-zh="提报定时开售现货+预售双发货模式产品需求，输出优化方案" data-en="Submitted product requirement for timed sale spot + pre-sale dual shipping model, delivered optimization plan">提报定时开售现货+预售双发货模式产品需求，输出优化方案</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item fade-in">
+          <div class="timeline-dot"></div>
+          <div class="experience-card">
+            <div class="experience-header">
+              <div class="experience-role" data-zh="商业分析实习生（商业创新研究组）" data-en="Business Analysis Intern (Business Innovation Research)">商业分析实习生（商业创新研究组）</div>
+              <div class="experience-date" data-zh="2026.01 - 2026.04" data-en="Jan 2026 - Apr 2026">2026.01 - 2026.04</div>
+            </div>
+            <div class="experience-company" data-zh="同程旅行 · 苏州" data-en="Tongcheng Travel · Suzhou">同程旅行 · 苏州</div>
+            <div class="experience-tags">
+              <span class="tag" data-zh="商分" data-en="BA">商分</span>
+              <span class="tag" data-zh="用研" data-en="User Research">用研</span>
+              <span class="tag" data-zh="新业务" data-en="New Business">新业务</span>
+            </div>
+            <ul class="experience-list">
+              <li data-zh="参与出行用户调研，完成用户分层画像与K型消费分化验证，挖掘四大新兴趋势" data-en="Participated in travel user research, completed user segmentation and K-shaped consumption divergence verification, identified four emerging trends">参与出行用户调研，完成用户分层画像与K型消费分化验证，挖掘四大新兴趋势</li>
+              <li data-zh="参与支付业务布局调研，完成易宝支付跨境业务拆解及头部对标分析" data-en="Participated in payment business layout research, completed Yeepay cross-border business breakdown and top competitor benchmarking">参与支付业务布局调研，完成易宝支付跨境业务拆解及头部对标分析</li>
+              <li data-zh="针对助贷新规整改背景，输出专项研究报告支持合规优化" data-en="Output special research report to support compliance optimization under loan assistance regulation reform">针对助贷新规整改背景，输出专项研究报告支持合规优化</li>
+              <li data-zh="跟踪抖音生鲜带货数据，为选品策略提供商分意见" data-en="Tracked Douyin fresh food live-streaming data, provided BA insights for product selection strategy">跟踪抖音生鲜带货数据，为选品策略提供商分意见</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item fade-in">
+          <div class="timeline-dot"></div>
+          <div class="experience-card">
+            <div class="experience-header">
+              <div class="experience-role" data-zh="行研实习生（食品饮料组）" data-en="Industry Research Intern (Food & Beverage)">行研实习生（食品饮料组）</div>
+              <div class="experience-date" data-zh="2025.07 - 2025.11" data-en="Jul 2025 - Nov 2025">2025.07 - 2025.11</div>
+            </div>
+            <div class="experience-company" data-zh="国联民生证券 · 上海" data-en="Guolian Minsheng Securities · Shanghai">国联民生证券 · 上海</div>
+            <div class="experience-tags">
+              <span class="tag" data-zh="行研" data-en="Research">行研</span>
+              <span class="tag" data-zh="食品饮料" data-en="F&B">食品饮料</span>
+              <span class="tag" data-zh="建模" data-en="Modeling">建模</span>
+            </div>
+            <ul class="experience-list">
+              <li data-zh="梳理威士忌行业多端数据，构建可复用分析框架，识别市场增长机会" data-en="Organized multi-source whisky industry data, built reusable analysis framework, identified market growth opportunities">梳理威士忌行业多端数据，构建可复用分析框架，识别市场增长机会</li>
+              <li data-zh="构建威士忌多维用户画像模型，支持产品场景化设计与营销策略" data-en="Built multi-dimensional whisky user persona model, supporting product scenario design and marketing strategy">构建威士忌多维用户画像模型，支持产品场景化设计与营销策略</li>
+              <li data-zh="通过区域数据交叉验证，量化白酒区域需求差异，输出运营策略依据" data-en="Quantified baijiu regional demand differences through cross-validation of regional data, delivered operational strategy basis">通过区域数据交叉验证，量化白酒区域需求差异，输出运营策略依据</li>
+              <li data-zh="建立白酒价格周度监测机制，提炼消费关键因素" data-en="Established weekly baijiu price monitoring mechanism, extracted key consumption factors">建立白酒价格周度监测机制，提炼消费关键因素</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-container">
+      <h2 class="section-title fade-in" data-zh="项目经历" data-en="Projects">项目经历</h2>
+      <div class="projects-grid">
+        <div class="project-card fade-in">
+          <div class="project-thumbnail"></div>
+          <div class="project-content">
+            <h3 class="project-title" data-zh="二手平台市场第三方信息验证机制检验" data-en="Third-party Information Verification in Second-hand Markets">二手平台市场第三方信息验证机制检验</h3>
+            <p class="project-desc" data-zh="基于闲鱼二手手机数据，运用因果推断方法检验第三方验证服务对交易价格的影响效应。" data-en="Based on Xianyu second-hand phone data, using causal inference methods to test the impact of third-party verification services on transaction prices.">基于闲鱼二手手机数据，运用因果推断方法检验第三方验证服务对交易价格的影响效应。</p>
+            <div class="project-tags">
+              <span class="tag" data-zh="大创" data-en="Innovation Program">大创</span>
+              <span class="tag" data-zh="队长" data-en="Team Lead">队长</span>
+              <span class="tag" data-zh="因果推断" data-en="Causal Inference">因果推断</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-container">
+      <h2 class="section-title fade-in" data-zh="教育背景" data-en="Education">教育背景</h2>
+      <div class="education-card fade-in">
+        <div class="education-header">
+          <div class="education-school" data-zh="南京大学" data-en="Nanjing University">南京大学</div>
+          <div class="education-date">2023.09 - 2027.06</div>
+        </div>
+        <div class="education-major" data-zh="经济学专业 · 本科" data-en="Economics · Bachelor's Degree">经济学专业 · 本科</div>
+        <div class="education-details">
+          <div><div class="education-detail-label">GPA</div><div class="education-detail-value">4.48 / 5.0 (89.6)</div></div>
+          <div><div class="education-detail-label" data-zh="荣誉" data-en="Honors">荣誉</div><div class="education-detail-value">2024人民奖学金</div></div>
+        </div>
+        <div class="education-courses">
+          <div class="education-courses-label" data-zh="主修课程" data-en="Core Courses">主修课程</div>
+          <div class="course-tags">
+            <span class="tag" data-zh="微积分" data-en="Calculus">微积分</span>
+            <span class="tag" data-zh="线性代数" data-en="Linear Algebra">线性代数</span>
+            <span class="tag" data-zh="概率论" data-en="Probability">概率论</span>
+            <span class="tag">Python</span>
+            <span class="tag" data-zh="计量经济学" data-en="Econometrics">计量经济学</span>
+            <span class="tag" data-zh="微观经济学" data-en="Microeconomics">微观经济学</span>
+            <span class="tag" data-zh="宏观经济学" data-en="Macroeconomics">宏观经济学</span>
+            <span class="tag" data-zh="统计学" data-en="Statistics">统计学</span>
+            <span class="tag" data-zh="大数据经济学" data-en="Big Data Economics">大数据经济学</span>
+            <span class="tag" data-zh="数据科学与人工智能" data-en="Data Science & AI">数据科学与人工智能</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-container">
+      <h2 class="section-title fade-in" data-zh="技能" data-en="Skills">技能</h2>
+      <div class="skills-cloud fade-in">
+        <span class="skill-tag">Python (Pandas/Matplotlib)</span>
+        <span class="skill-tag" data-zh="R（因果推断）" data-en="R (Causal Inference)">R（因果推断）</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag" data-zh="Excel（高级函数/透视表）" data-en="Excel (Advanced / Pivot)">Excel（高级函数/透视表）</span>
+        <span class="skill-tag" data-zh="数据分析" data-en="Data Analysis">数据分析</span>
+        <span class="skill-tag" data-zh="商业分析" data-en="Business Analysis">商业分析</span>
+        <span class="skill-tag" data-zh="电商运营" data-en="E-commerce Operations">电商运营</span>
+        <span class="skill-tag" data-zh="行业研究" data-en="Industry Research">行业研究</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="section-container">
+      <h2 class="section-title fade-in" data-zh="保持联系" data-en="Get in Touch">保持联系</h2>
+      <p class="contact-subtitle fade-in" data-zh="期待与你交流想法、项目，或任何有趣的事。" data-en="Looking forward to exchanging ideas, projects, or anything interesting with you.">期待与你交流想法、项目，或任何有趣的事。</p>
+      <div class="contact-info fade-in">
+        <div class="contact-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span>231098242@smail.nju.edu.cn</span>
+        </div>
+        <div class="contact-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>182-9798-6837</span>
+        </div>
+      </div>
+      <div class="contact-buttons fade-in">
+        <a href="mailto:231098242@smail.nju.edu.cn" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span data-zh="发送邮件" data-en="Send Email">发送邮件</span>
+        </a>
+        <a href="#" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-text" data-zh="© 2026 陈正伟. 保留所有权利。" data-en="© 2026 Zhengwei Chen. All rights reserved.">© 2026 陈正伟. 保留所有权利。</div>
+      <div class="footer-built" data-html="true" data-zh="用 <span class='heart'>❤</span> 和 HTML/CSS/JS 构建" data-en="Built with <span class='heart'>❤</span> and HTML/CSS/JS">用 <span class="heart">❤</span> 和 HTML/CSS/JS 构建</div>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+    const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+    const sunIcon = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      themeIcon.innerHTML = theme === 'dark' ? sunIcon : moonIcon;
+    }
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) { setTheme(savedTheme); }
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { setTheme('dark'); }
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+
+    const langToggle = document.getElementById('langToggle');
+    function setLang(lang) {
+      html.setAttribute('data-lang', lang);
+      localStorage.setItem('lang', lang);
+      document.querySelectorAll('[data-zh][data-en]').forEach(el => {
+        if (el.dataset.html === 'true') { el.innerHTML = lang === 'zh' ? el.dataset.zh : el.dataset.en; }
+        else { el.textContent = lang === 'zh' ? el.dataset.zh : el.dataset.en; }
+      });
+      langToggle.textContent = lang === 'zh' ? 'EN' : '中';
+      html.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    }
+    const savedLang = localStorage.getItem('lang') || 'zh';
+    setLang(savedLang);
+    langToggle.addEventListener('click', () => {
+      const currentLang = html.getAttribute('data-lang');
+      setLang(currentLang === 'zh' ? 'en' : 'zh');
+    });
+
+    const nav = document.getElementById('nav');
+    function handleNavScroll() {
+      if (window.scrollY > 20) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }
+    window.addEventListener('scroll', handleNavScroll);
+    handleNavScroll();
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    fadeElements.forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    function updateActiveLink() {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) { current = section.getAttribute('id'); }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) { link.classList.add('active'); }
+      });
+    }
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink();
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({ top: target.offsetTop - 60, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
